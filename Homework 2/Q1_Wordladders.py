@@ -1,8 +1,8 @@
 '''Task: Transform the start word into the goal word by 
 transforming one letter at a time and all intermediate 
-words must be valid as well.'''
+words must be valid as well.
 
-''' States are strings representing the words'''
+States are strings representing the words'''
 
 import string
 from search import *
@@ -15,16 +15,16 @@ def is_valid_word(word):
     return word in WORDS
 
 # Using abstract class for a formal problem from search.py
-class WordLadders(Problem):
+class Word_Ladders(Problem):
 
     # list of actions would be the possible words to change from the current state words whereby 
     # it involves changing each letter of the current word and only appending it to the list if it is valid
     def actions(self, state):
         actions = [] #list
-        for i in range(len(state)):
-            for letter in string.ascii_lowercase: 
-                if state[i] != letter:
-                    possible_word = state[:i] + letter + state[i+1:]
+        for i,letter_i in enumerate(state):
+            for letter_j in string.ascii_lowercase: 
+                if letter_i != letter_j:
+                    possible_word = state[:i] + letter_j + state[i+1:]
                     if is_valid_word(possible_word):
                         actions.append(possible_word)
         return actions
@@ -109,4 +109,4 @@ if __name__ == '__main__':
     for search_method in search_methods:
         print(f"Search method: {search_method}")
         for test_case in test_cases:    
-            get_solution(WordLadders(test_case[0],test_case[1]), search_method)
+            get_solution(Word_Ladders(test_case[0],test_case[1]), search_method)
