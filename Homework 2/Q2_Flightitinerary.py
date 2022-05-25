@@ -84,7 +84,6 @@ def find_itinerary(start_city, start_time, end_city, deadline):
         # Starting locations and time
         flight_plan_start = []
         for end_flights in flight_plan_end:
-            print(end_flights)
             # Note the search only returns the end location and time of the flight, we need the starting location and time
             for flight in flightDB:
                 # Find the matching ending location and time, end flight location and time tuple are unique
@@ -96,8 +95,9 @@ def find_itinerary(start_city, start_time, end_city, deadline):
         
         # return iterable zip as a set in the form of the flightDB
         return set(result)
+
     except AttributeError:
-        print("No possible flight plan found.")
+        pass
 
 '''Part 4: Going Further, Yes a brute-force approach by first calling the find_itinerary function
 with a deadline of 1, and then incrementing it by 1 till a successful path is found will find the
@@ -109,8 +109,37 @@ destination city, and should return a list of (city, time) tuples representing t
 shortest path between the two cities. You may assume that there is at least one
 path connecting the two cities.'''
 
+def find_shortest_itinerary(start_city, end_city):
+    deadline = 1
+    while True:
+        shortest_plan = find_itinerary(start_city, 1, end_city, deadline)
+        if type(shortest_plan) == set:
+            print(f"Deadline is {deadline} and the shortest path is:")
+            return shortest_plan
+        else: 
+            deadline += 1
+
 '''Additional Challenge: Minimize the number of times procedure calls find_itinerary'''
+
+def find_shortest_itinerary2(start_city, end_city):
+    # Instead of slowly incrementing deadlines all we need is the matching end timings for the end cities as our deadlines
+    deadlines = []
+    for flight in flightDB:
+        if flight.end_city == end_city:
+            deadlines.append(flight.end_time)
+    
+    counter = 0
+    for deadline in deadlines:
+        shortest_plan = find_itinerary(start_city, 1, end_city, deadline)
+        counter += 1
+        if type(shortest_plan) == set:
+            print(f"find_itinerary is called {counter} times, the deadline is {deadline} and the shortest path is:")
+            return shortest_plan
+        else: 
+            deadline += 1
 
 if __name__ == '__main__':
     # Test Cases
     print(find_itinerary('Rome', 2, 'London', 15))
+    print(find_shortest_itinerary('Rome','London'))
+    print(find_shortest_itinerary2('Rome','London'))

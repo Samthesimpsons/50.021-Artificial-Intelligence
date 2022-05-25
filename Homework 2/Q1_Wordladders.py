@@ -4,6 +4,7 @@ words must be valid as well.
 
 States are strings representing the words'''
 
+from os import path
 import string
 from search import *
 
@@ -59,34 +60,34 @@ class Word_Ladders(Problem):
 def get_solution(word_ladder, search_method:str):
     try:        
         if search_method == 'breadth_first_tree_search': #passed
-            actions = breadth_first_tree_search(word_ladder).solution() 
+            path = breadth_first_tree_search(word_ladder).solution() 
 
         elif search_method == 'depth_first_tree_search': #optimality not reached
-            actions = depth_first_tree_search(word_ladder).solution()
+            path = depth_first_tree_search(word_ladder).solution()
 
         elif search_method == 'depth_first_graph_search': #passed
-            actions = depth_first_graph_search(word_ladder).solution()
+            path = depth_first_graph_search(word_ladder).solution()
 
         elif search_method == 'breadth_first_search': #passed
-            actions = breadth_first_search(word_ladder).solution()
+            path = breadth_first_search(word_ladder).solution()
 
         elif search_method == 'best_first_graph_search': #passed
-            actions = best_first_graph_search(word_ladder).solution()
+            path = best_first_graph_search(word_ladder).solution()
 
         elif search_method == 'uniform_cost_search': #passed
-            actions = uniform_cost_search(word_ladder).solution()
+            path = uniform_cost_search(word_ladder).solution()
 
         elif search_method == 'depth_limited_search': #passed
-            actions = depth_limited_search(word_ladder, limit=50).solution()
+            path = depth_limited_search(word_ladder, limit=50).solution()
 
         elif search_method == 'iterative_deepening_search': #passed
-            actions = iterative_deepening_search(word_ladder).solution()
+            path = iterative_deepening_search(word_ladder).solution()
 
         elif search_method == 'astar_search': #passed
-            actions = astar_search(word_ladder).solution()            
+            path = astar_search(word_ladder).solution()            
 
-        actions.insert(0,word_ladder.initial)
-        print(actions)
+        path.insert(0,word_ladder.initial)
+        print(path)
 
     except AttributeError:
         print("Solution not found.")
