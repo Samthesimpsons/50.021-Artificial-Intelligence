@@ -337,7 +337,7 @@ def exp_schedule(k=20, lam=0.005, limit=100):
 def simulated_annealing(problem, schedule=exp_schedule()):
     "[Fig. 4.5]"
     current = Node(problem.initial)
-    for t in xrange(sys.maxint):
+    for t in range(sys.maxint):
         T = schedule(t)
         if T == 0:
             return current
