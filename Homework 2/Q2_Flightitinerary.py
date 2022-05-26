@@ -89,11 +89,11 @@ def find_itinerary(start_city, start_time, end_city, deadline):
                 if flight.end_city == end_flights[0] and flight.end_time == end_flights[1]:
                     flight_plan_start.append((flight.start_city, flight.start_time))
 
-        # with the two list form a zip iterables 
-        result = zip(flight_plan_start, flight_plan_end)
-        
-        # return iterable zip as a set in the form of the flightDB
-        return set(result)
+        # with the two list form a zip iterables, combine the tupple and append to a list similar to FlightDB
+        results = []
+        for i,result in enumerate(zip(flight_plan_start, flight_plan_end)):
+            results.append(result[0] + result[1])
+        return results
 
     except AttributeError:
         pass
@@ -112,7 +112,7 @@ def find_shortest_itinerary(start_city, end_city):
     deadline = 1
     while True:
         shortest_plan = find_itinerary(start_city, 1, end_city, deadline)
-        if type(shortest_plan) == set:
+        if type(shortest_plan) == list:
             print(f"Deadline is {deadline} and the shortest path is:")
             return shortest_plan
         else: 
@@ -131,7 +131,7 @@ def find_shortest_itinerary_challenge(start_city, end_city):
     for deadline in deadlines:
         shortest_plan = find_itinerary(start_city, 1, end_city, deadline)
         counter += 1
-        if type(shortest_plan) == set:
+        if type(shortest_plan) == list:
             print(f"find_itinerary is called {counter} times, the deadline is {deadline} and the shortest path is:")
             return shortest_plan
         else: 

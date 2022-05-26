@@ -62,6 +62,7 @@ def get_solution(word_ladder, search_method:str):
         if search_method == 'breadth_first_tree_search': #passed
             path = breadth_first_tree_search(word_ladder).solution() 
 
+        # Edited the tree_search in search.py to cut off words in a path to 40000, to prevent overflow
         elif search_method == 'depth_first_tree_search': #optimality not reached
             path = depth_first_tree_search(word_ladder).solution()
 
@@ -74,6 +75,11 @@ def get_solution(word_ladder, search_method:str):
         elif search_method == 'best_first_graph_search': #passed
             path = best_first_graph_search(word_ladder).solution()
 
+        # Bugs inside search.py: 
+        # 1. xrange(python2) -> range(python3)
+        # 2. sys.maxint(python2) -> sys.maxsize(python3)
+        # 3. (python3) requires comparison for Classes, hence Node Class, added a __lt__ for < comparisons 
+        # ONLY then will uniform_cost_search and astar_search run
         elif search_method == 'uniform_cost_search': #passed
             path = uniform_cost_search(word_ladder).solution()
 
