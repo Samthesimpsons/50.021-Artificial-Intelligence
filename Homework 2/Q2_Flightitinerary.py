@@ -8,10 +8,9 @@ starting time, final destination city and deadline time. The objective is to
 find a sequence of flights that departs from the starting city at the starting 
 time or later, and arrive at the destination city before the deadline time.
 We will formulate it as a search problem.
-'''
 
-''' Part 1: A good choice of state in this problem would be the
-Current city and current time '''
+Part 1: A good choice of state in this problem would be the
+Current city and current time.'''
 
 from search import *
 
@@ -56,7 +55,7 @@ class Flight_Itinerary(Problem):
                 actions.append((flight.end_city, flight.end_time))
         return actions
 
-    # Similar to Q1
+    # Similar to Question 1
     def result(self, state, action):
         return action
 
@@ -121,7 +120,7 @@ def find_shortest_itinerary(start_city, end_city):
 
 '''Additional Challenge: Minimize the number of times procedure calls find_itinerary'''
 
-def find_shortest_itinerary2(start_city, end_city):
+def find_shortest_itinerary_challenge(start_city, end_city):
     # Instead of slowly incrementing deadlines all we need is the matching end timings for the end cities as our deadlines
     deadlines = []
     for flight in flightDB:
@@ -142,4 +141,4 @@ if __name__ == '__main__':
     # Test Cases
     print(find_itinerary('Rome', 2, 'London', 15))
     print(find_shortest_itinerary('Rome','London'))
-    print(find_shortest_itinerary2('Rome','London'))
+    print(find_shortest_itinerary_challenge('Rome','London'))
