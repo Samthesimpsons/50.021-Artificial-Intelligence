@@ -10,6 +10,9 @@ c) For the diagonal V1, V5, V9 each pair of values is different too (binary cons
 from semimagic import *
 import math as m
 import pandas as pd
+import random
+
+random.seed(2022) # for reproducibility of results when grading
 
 def solve_semi_magic(algorithm=backtracking_search, **args):
     """ From CSP class in csp.py
@@ -25,7 +28,11 @@ def solve_semi_magic(algorithm=backtracking_search, **args):
 
     #########################################
     # Fill in these definitions
-
+    '''
+    1 2 3
+    4 5 6
+    7 8 9
+    '''
     csp_neighbors = {'V1': ['V2', 'V3', 'V4', 'V5', 'V7', 'V9'],
                      'V2': ['V1', 'V3', 'V5', 'V8'],
                      'V3': ['V1', 'V2', 'V6', 'V9'],
@@ -41,6 +48,7 @@ def solve_semi_magic(algorithm=backtracking_search, **args):
         csp_domains[var] = [1, 2, 3]
 
     def csp_constraints(A, a, B, b):
+        # note this will already cover the sum to 6 constraint given the neighbors
         return a != b
 
     #########################################
@@ -68,13 +76,20 @@ if __name__ == '__main__':
     value_ordering = [unordered_domain_values, lcv]
     inference = [no_inference, forward_checking, mac]
 
+    df = pd.DataFrame(columns=["Variable_Ordering","Value_Ordering", "Inference", "Number_Assignment"])
+
     for i in variable_ordering:
         for j in value_ordering:
             for k in inference:
                 print('Variable ordering is {}, value ordering is {} and inference is {}'.format(i.__name__, j.__name__, k.__name__))
-                solve_semi_magic(backtracking_search,
-                                 select_unassigned_variable=i,
-                                 order_domain_values=j,
-                                 inference=k)
+                result = solve_semi_magic(backtracking_search,
+                                          select_unassigned_variable=i,
+                                          order_domain_values=j,
+                                          inference=k)
+                df.loc[len(df)] = [i.__name__, j.__name__,k.__name__, result.nassigns]
+                result
 
     '''3) Visualize the number of assignments based on the type of algorithm'''
+    print(df)
+
+'''As we can see from the dataframe results, that the '''
