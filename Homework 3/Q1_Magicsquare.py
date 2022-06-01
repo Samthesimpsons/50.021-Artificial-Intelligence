@@ -92,4 +92,21 @@ if __name__ == '__main__':
     '''3) Visualize the number of assignments based on the type of algorithm'''
     print(df)
 
-'''As we can see from the dataframe results, that the '''
+'''As we can see from the dataframe results:
+
+mrv                      lcv      no_inference                 24
+mrv                      lcv  forward_checking                  9
+mrv                      lcv               mac                  9
+
+Firstly if there is both variable and value ordering (mrv and lcv), we note that the case of no inference performed worse than the cases of foward checking or arc consistency checks,
+24>9. This is expected as forward checking helps reduce the number of searches, hence assignment since it terminates the search when any variable has no more legal values.
+Arc consistency repeatedly enforces constraints locally via propagation and detects failure earlier than forward checking. Nevertheless, no inference is expected to perform worse than
+cases of inferences being applied.
+
+mrv  unordered_domain_values      no_inference                 11
+mrv  unordered_domain_values  forward_checking                  9
+mrv  unordered_domain_values               mac                  9
+A similar pattern is once again observed.
+
+For all the remaining cases, we note that the number of assignments is similar, this might be due to the fact that the 
+CSP problem is not very complex in the first place. However, from our run we got to see the effectives of using inferencing.'''
