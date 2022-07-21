@@ -1,0 +1,105 @@
+
+ RESULTS:
+ --- OK.
+ Match tree built with 12 nodes.
+
+PDDL problem description loaded: 
+	Domain: LOG-PROBLEM
+	Problem: LOG-PROBLEM-1
+	#Actions: 12
+	#Fluents: 7
+Landmarks found: 1
+Starting search with IW (time budget is 60 secs)...
+rel_plan size: 4
+#RP_fluents 4
+Caption
+{#goals, #UNnachieved,  #Achieved} -> IW(max_w)
+
+{1/1/0}:IW(1) -> [2][3][4][5]rel_plan size: 0
+#RP_fluents 0Plan found with cost: 4
+Total time: 4.47035e-10
+Nodes generated during search: 13
+Nodes expanded during search: 10
+IW search completed
+
+OUTPUT:
+(move truck tampinese bedok)
+(load package1 truck bedok)
+(move truck bedok changi)
+(unload package1 truck changi)
+
+(:action move
+:parameters (truck tampinese bedok)
+:precondition
+    (and
+    (truck truck)
+    (location tampinese)
+    (location bedok)
+    (at-truck truck tampinese)
+    (path tampinese bedok)
+    )
+:effect
+    (and
+    (at-truck truck bedok)
+    (not
+        (at-truck truck tampinese)
+    )
+    )
+)
+
+(:action load
+:parameters (package1 truck bedok)
+:precondition
+    (and
+    (truck truck)
+    (package package1)
+    (location bedok)
+    (at-truck truck bedok)
+    (at-package package1 bedok)
+    )
+:effect
+    (and
+    (in-truck package1 truck)
+    (not
+        (at-package package1 bedok)
+    )
+    )
+)
+
+(:action move
+:parameters (truck bedok changi)
+:precondition
+    (and
+    (truck truck)
+    (location bedok)
+    (location changi)
+    (at-truck truck bedok)
+    (path bedok changi)
+    )
+:effect
+    (and
+    (at-truck truck changi)
+    (not
+        (at-truck truck bedok)
+    )
+    )
+)
+
+(:action unload
+:parameters (package1 truck changi)
+:precondition
+    (and
+    (truck truck)
+    (package package1)
+    (location changi)
+    (at-truck truck changi)
+    (in-truck package1 truck)
+    )
+:effect
+    (and
+    (at-package package1 changi)
+    (not
+        (in-truck package1 truck)
+    )
+    )
+)

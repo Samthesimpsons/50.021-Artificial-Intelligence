@@ -1,0 +1,167 @@
+
+ RESULTS:
+ --- OK.
+ Match tree built with 18 nodes.
+
+PDDL problem description loaded: 
+	Domain: LOG-PROBLEM
+	Problem: LOG-PROBLEM-2
+	#Actions: 18
+	#Fluents: 11
+Landmarks found: 2
+Starting search with IW (time budget is 60 secs)...
+rel_plan size: 6
+#RP_fluents 6
+Caption
+{#goals, #UNnachieved,  #Achieved} -> IW(max_w)
+
+{2/2/0}:IW(1) -> [2][3][4][5]rel_plan size: 3
+#RP_fluents 3
+{2/1/1}:IW(1) -> [2][3][4]rel_plan size: 0
+#RP_fluents 0Plan found with cost: 7
+Total time: -2.08616e-10
+Nodes generated during search: 25
+Nodes expanded during search: 17
+IW search completed
+
+OUTPUT:
+(move truck tampinese changi)
+(load package2 truck changi)
+(move truck changi bedok)
+(unload package2 truck bedok)
+(load package1 truck bedok)
+(move truck bedok changi)
+(unload package1 truck changi)
+
+(:action move
+:parameters (truck tampinese changi)
+:precondition
+    (and
+    (truck truck)
+    (location tampinese)
+    (location changi)
+    (at-truck truck tampinese)
+    (path tampinese changi)
+    )
+:effect
+    (and
+    (at-truck truck changi)
+    (not
+        (at-truck truck tampinese)
+    )
+    )
+)
+
+(:action load
+:parameters (package2 truck changi)
+:precondition
+    (and
+    (truck truck)
+    (package package2)
+    (location changi)
+    (at-truck truck changi)
+    (at-package package2 changi)
+    )
+:effect
+    (and
+    (in-truck package2 truck)
+    (not
+        (at-package package2 changi)
+    )
+    )
+)
+
+(:action move
+:parameters (truck changi bedok)
+:precondition
+    (and
+    (truck truck)
+    (location changi)
+    (location bedok)
+    (at-truck truck changi)
+    (path changi bedok)
+    )
+:effect
+    (and
+    (at-truck truck bedok)
+    (not
+        (at-truck truck changi)
+    )
+    )
+)
+
+(:action move
+:parameters (truck changi bedok)
+:precondition
+    (and
+    (truck truck)
+    (location changi)
+    (location bedok)
+    (at-truck truck changi)
+    (path changi bedok)
+    )
+:effect
+    (and
+    (at-truck truck bedok)
+    (not
+        (at-truck truck changi)
+    )
+    )
+)
+
+(:action load
+:parameters (package1 truck bedok)
+:precondition
+    (and
+    (truck truck)
+    (package package1)
+    (location bedok)
+    (at-truck truck bedok)
+    (at-package package1 bedok)
+    )
+:effect
+    (and
+    (in-truck package1 truck)
+    (not
+        (at-package package1 bedok)
+    )
+    )
+)
+
+(:action move
+:parameters (truck bedok changi)
+:precondition
+    (and
+    (truck truck)
+    (location bedok)
+    (location changi)
+    (at-truck truck bedok)
+    (path bedok changi)
+    )
+:effect
+    (and
+    (at-truck truck changi)
+    (not
+        (at-truck truck bedok)
+    )
+    )
+)
+
+(:action unload
+:parameters (package1 truck changi)
+:precondition
+    (and
+    (truck truck)
+    (package package1)
+    (location changi)
+    (at-truck truck changi)
+    (in-truck package1 truck)
+    )
+:effect
+    (and
+    (at-package package1 changi)
+    (not
+        (in-truck package1 truck)
+    )
+    )
+)
