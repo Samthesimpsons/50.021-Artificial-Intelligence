@@ -1,0 +1,178 @@
+---
+title: "SUTD 50.021 AI"
+subtitle: Week 11 Theory Homework - Planning
+author: "Samuel Sim Wei Xuan, 1004657"
+date: "7/28/2022"
+output: pdf_document
+---
+
+## Question 1: Logistic Problem I
+
+1. **STRIPS representation:**
+   - **P**: Set of propositional variables
+     - onA(truck): truck is on location a
+     - onB(truck): truck is on location b
+     - onC(truck): truck is on location c
+     - onA(package): unloaded package is on location a
+     - onB(package): unloaded package is on location b
+     - onC(package): unloaded package is on location c
+     - truckloaded: the truck is holding a package
+   - **O**: A set of operators(actions):
+     - move(A,B): move truck from location a to b:
+       - _$pre_a$_: onA(truck)
+       - _$add_a$_: onB(truck)
+       - _$del_a$_: onA(truck)
+     - move(B,C): move truck from location b to c:
+       - _$pre_a$_: onB(truck)
+       - _$add_a$_: onC(truck)
+       - _$del_a$_: onB(truck)
+     - move(C,B): move truck from location c to b:
+       - _$pre_a$_: onC(truck)
+       - _$add_a$_: onB(truck)
+       - _$del_a$_: onC(truck)
+     - move(B,A): move truck from location b to a:
+       - _$pre_a$_: onB(truck)
+       - _$add_a$_: onA(truck)
+       - _$del_a$_: onB(truck)
+     - load(A): truck loads a package at location a:
+       - _$pre_a$_: onA(truck), onA(package)
+       - _$add_a$_: truckloaded
+       - _$del_a$_: onA(package)
+     - load(B): truck loads a package at location b:
+       - _$pre_a$_: onB(truck), onB(package)
+       - _$add_a$_: truckloaded
+       - _$del_a$_: onB(package)
+     - load(C): truck loads a package at location c:
+       - _$pre_a$_: onC(truck), onC(package)
+       - _$add_a$_: truckloaded
+       - _$del_a$_: onC(package)
+     - unload(A): truck unloads a package at location a:
+       - _$pre_a$_: onA(truck), truckloaded
+       - _$add_a$_: onA(package)
+       - _$del_a$_: truckloaded
+     - unload(B): truck unloads a package at location b:
+       - _$pre_a$_: onB(truck), truckloaded
+       - _$add_a$_: onB(package)
+       - _$del_a$_: truckloaded
+     - unload(C): truck unloads a package at location c:
+       - _$pre_a$_: onC(truck), truckloaded
+       - _$add_a$_: onC(package)
+       - _$del_a$_: truckloaded
+   - **I**: Initial state of the world
+     - onA(truck), onC(package)
+   - **G**: Goal state of the world
+     - onB(truck), onB(package)
+
+## Question 2: Logistic Problem II
+
+1. Optimal solution: move(A,B), move(B,C), load(C), move(C,B), unload(B)
+2. Deleted-relaxed problem, by removing all the negation of facts in all operators (remove all _$del_a$_):
+   - **P**: Set of propositional variables
+     - onA(truck): truck is on location a
+     - onB(truck): truck is on location b
+     - onC(truck): truck is on location c
+     - onA(package): unloaded package is on location a
+     - onB(package): unloaded package is on location b
+     - onC(package): unloaded package is on location c
+     - truckempty: the truck is not holding any package
+   - **O**: A set of operators(actions):
+     - move(A,B): move truck from location a to b:
+       - _$pre_a$_: onA(truck)
+       - _$add_a$_: onB(truck)
+     - move(B,C): move truck from location b to c:
+       - _$pre_a$_: onB(truck)
+       - _$add_a$_: onC(truck)
+     - move(C,B): move truck from location c to b:
+       - _$pre_a$_: onC(truck)
+       - _$add_a$_: onB(truck)
+     - move(B,A): move truck from location b to a:
+       - _$pre_a$_: onB(truck)
+       - _$add_a$_: onA(truck)
+     - load(A): truck loads a package at location a:
+       - _$pre_a$_: onA(truck), onA(package)
+       - _$add_a$_: truckloaded
+     - load(B): truck loads a package at location b:
+       - _$pre_a$_: onB(truck), onB(package)
+       - _$add_a$_: truckloaded
+     - load(C): truck loads a package at location c:
+       - _$pre_a$_: onC(truck), onC(package)
+       - _$add_a$_: truckloaded
+     - unload(A): truck unloads a package at location a:
+       - _$pre_a$_: onA(truck), truckloaded
+       - _$add_a$_: onA(package)
+     - unload(B): truck unloads a package at location b:
+       - _$pre_a$_: onB(truck), truckloaded
+       - _$add_a$_: onB(package)
+     - unload(C): truck unloads a package at location c:
+       - _$pre_a$_: onC(truck), truckloaded
+       - _$add_a$_: onC(package)
+   - **I**: Initial state of the world
+     - onA(truck), onC(package), truckempty
+   - **G**: Goal state of the world
+     - onB(truck), onB(package), truckempty
+3. Concise representation:
+   - Variables: onA(truck), onB(truck), onC(truck), onA(package), onB(package), onC(package), truckloaded
+   - Initial State: onA(truck), onC(package)
+   - Goal: onB(truck), onB(package)
+   - Actions:
+     - $o_1$: $pre$: onA(truck) | $post$: onB(truck)
+     - $o_2$: $pre$: onB(truck) |  $post$: onC(truck)
+     - $o_3$: $pre$: onC(truck) |  $post$: onB(truck)
+     - $o_4$: $pre$: onB(truck) |  $post$: onA(truck)
+     - $o_5$: $pre$: onA(truck), onA(package) |  $post$: truckloaded
+     - $o_6$: $pre$: onB(truck), onB(package) |  $post$: truckloaded
+     - $o_7$: $pre$: onC(truck), onC(package) |  $post$: truckloaded
+     - $o_8$: $pre$: onA(truck), truckloaded |  $post$: onA(package)
+     - $o_9$: $pre$: onB(truck), truckloaded |  $post$: onB(package)
+     - $o_{10}$: $pre$: onC(truck), truckloaded |  $post$: onC(package)
+   - Facts and actions:
+     - $F_0$: onA(truck), onC(package)
+     - $A_0$: $o_1$
+     - $F_1$: onA(truck), onB(truck), onC(package)
+     - $A_1$: $o_2$
+     - $F_2$: onA(truck), onB(truck), onC(truck), onC(package)
+     - $A_2$: $o_7$
+     - $F_3$: onA(truck), onB(truck), onC(truck), onC(package), truckloaded
+     - $A_3$: $o_9$
+     - $F_4$: onA(truck), onB(truck), onC(truck), onB(package), onC(package), truckloaded
+
+## Question 3: Logistic Problem III
+
+1. Optimal solution to delete relaxed problem: $o_1$: move(A,B), $o_2$: move(B,C), $o_7$: load(C), $o_9$: unload(B). Note the optimal number of steps for relaxed problem is 4 which is less than the optimal number to original problem of 5, hence admissible. This heuristic is called `h+ heuristics`.
+2. $h_{add}$ is $1+4 = 5$, summed cost (number of steps) of all the goal facts (in bold).
+   - $F_0$: onA(truck), onC(package)
+   - $A_0$: $o_1$
+   - $F_1$: onA(truck), **onB(truck)**, onC(package)
+   - $A_1$: $o_2$
+   - $F_2$: onA(truck), onB(truck), onC(truck), onC(package)
+   - $A_2$: $o_7$
+   - $F_3$: onA(truck), onB(truck), onC(truck), onC(package), truckloaded
+   - $A_3$: $o_9$
+   - $F_4$: onA(truck), onB(truck), onC(truck), **onB(package)**, onC(package), truckloaded
+3. $h_{max}$ is $4$, the cost of the single most costly goal fact (**onB(package)**).
+
+## Question 4: Generic Planning I
+
+Assumption: Delete-relaxed problem (no delete actions), therefore firstly remove all deletes.
+
+1. $h+$ is 2 (A -> B/D to achieve goal state of ${m,n,o,p}$), the minimal number of actions for a delete-relaxed problem (no deletes).
+2. $h_{add}$ is $0+1+1+2 = 4$, summed cost (number of steps) of all the goal facts (in bold).
+   - $F_0$: **m**
+   - $A_0$: A
+   - $F_1$: m, **n**, **o**
+   - $A_1$: B or D
+   - $F_2$: m, n, o, **p**
+3. $h_{max}$ is $2$, the cost of the single most costly goal fact (**p**).
+
+## Question 4: Generic Planning II
+
+Assumption: Delete-relaxed problem (no delete actions), therefore firstly remove all deletes.
+
+1. $h+$ is 2 (C -> A to achieve goal state of ${m,n,o,p}$), the minimal number of actions for a delete-relaxed problem (no deletes).
+2. $h_{add}$ is $0+1+2+2 = 5$, summed cost (number of steps) of all the goal facts (in bold).
+   - $F_0$: **p**
+   - $A_0$: C
+   - $F_1$: **m**, p
+   - $A_1$: A
+   - $F_2$: m, **n**, **o**, p
+3. $h_{max}$ is $2$, the cost of the single most costly goal fact (**n** or **o**).
