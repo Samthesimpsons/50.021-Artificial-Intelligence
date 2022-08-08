@@ -1,4 +1,4 @@
-# 50.021-AI
+# 50.021 Artificial Intelligence
 SUTD 50.021 Artificial Intelligence Module Homework and Notes
 
 My cheatsheets, homework and any lab sessions.
@@ -8,3 +8,5 @@ Homeworks are a mixture of original work and referenced from https://github.com/
 Also, feel free to use the cheatsheets for your own reference, they are originals made by me.
 
 Lab sessions are taken from class.
+
+Check out my group's project at https://github.com/Samthesimpsons/AI-Reinforcement-Learning-Project
