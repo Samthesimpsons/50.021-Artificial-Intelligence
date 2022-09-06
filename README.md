@@ -1,7 +1,7 @@
 # 50.021 Artificial Intelligence
 SUTD 50.021 Artificial Intelligence Module Homework and Notes
 
-My cheatsheets, homework and any lab sessions.
+My cheatsheets, homework and any lab sessions. Guide to get an A (if you put in the effort, it is easily attainable)
 
 Homeworks are a mixture of original work and referenced from https://github.com/yee-kevin/artificial-intelligence (mainly for the generative model homework). Please do not directly copy (from mine or Yee Kevin) as that is plagiarism.
 
